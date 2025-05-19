@@ -16,10 +16,24 @@
         "redhat.vscode-xml",
         "vmware.vscode-spring-boot",
         "pivotal.vscode-boot-dev-pack"
-      ]
+      ],
+      "settings": {
+        "java.configuration.runtimes": [
+          {
+            "name": "JavaSE-17",
+            "path": "/usr/lib/jvm/java-17-openjdk-arm64",
+            "default": true
+          }
+        ],
+        "java.jdt.ls.java.home": "/usr/lib/jvm/java-17-openjdk-arm64"
+      }
     }
   },
   "forwardPorts": [4004, 8080],
   "remoteUser": "node",
-  "postCreateCommand": "sudo npm install -g @sap/cds-dk --prefix=/usr/local"
+  "remoteEnv": {
+    "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-arm64",
+    "PATH": "${containerEnv:PATH}:/usr/lib/jvm/java-17-openjdk-arm64/bin"
+  },
+  "postCreateCommand": "sudo npm install -g @sap/cds-dk --prefix=/usr/local && echo 'export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-arm64' >> ~/.bashrc && echo 'export PATH=$PATH:$JAVA_HOME/bin' >> ~/.bashrc && if [ ! -f 'pom.xml' ] || ! grep -q '<jdk.version>17</jdk.version>' pom.xml; then cds add java; sed -i 's/<jdk.version>21<\\/jdk.version>/<jdk.version>17<\\/jdk.version>/g' pom.xml; fi"
 }
