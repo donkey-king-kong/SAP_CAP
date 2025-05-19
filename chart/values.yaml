@@ -1,0 +1,70 @@
+# yaml-language-server: $schema=./values.schema.json
+
+global:
+  domain: abc.com
+  imagePullSecret:
+    name: docker-registry
+  image:
+    registry: registry-name
+    tag: latest
+srv:
+  bindings:
+    service-manager:
+      serviceInstanceName: service-manager
+  image:
+    repository: SAP_CAP-srv
+  resources:
+    limits:
+      ephemeral-storage: 1G
+      memory: 500M
+    requests:
+      ephemeral-storage: 1G
+      cpu: 500m
+      memory: 500M
+  health:
+    liveness:
+      path: /health
+    readiness:
+      path: /health
+service-manager:
+  serviceOfferingName: service-manager
+  servicePlanName: container
+saas-registry:
+  serviceOfferingName: saas-registry
+  servicePlanName: application
+  parameters:
+    displayName: SAP_CAP
+    description: A simple CAP project.
+    category: "CAP Application"
+    appUrls:
+      onSubscriptionAsync: true
+      onUnSubscriptionAsync: true
+      onUpdateDependenciesAsync: true
+      callbackTimeoutMillis: 300000
+      getDependencies: https://{{ .Release.Name }}-sidecar-{{ .Release.Namespace }}.{{ .Values.global.domain }}/-/cds/saas-provisioning/dependencies
+      onSubscription: https://{{ .Release.Name }}-sidecar-{{ .Release.Namespace }}.{{ .Values.global.domain }}/-/cds/saas-provisioning/tenant/{tenantId}
+    xsappname: SAP_CAP-{{ .Release.Namespace }}
+    appName: SAP_CAP-{{ .Release.Namespace }}
+sidecar:
+  bindings:
+    saas-registry:
+      serviceInstanceName: saas-registry
+    service-manager:
+      serviceInstanceName: service-manager
+  image:
+    repository: SAP_CAP-sidecar
+  resources:
+    limits:
+      ephemeral-storage: 1G
+      memory: 500M
+    requests:
+      ephemeral-storage: 1G
+      cpu: 500m
+      memory: 500M
+  health:
+    liveness:
+      path: /health
+    readiness:
+      path: /health
+  env:
+    SUBSCRIPTION_URL: https://${tenant_subdomain}-{{ .Release.Name }}-srv-{{ .Release.Namespace }}.{{ .Values.global.domain }}
