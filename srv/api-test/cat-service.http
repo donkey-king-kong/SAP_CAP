@@ -1,8 +1,10 @@
 ### Get all books
 GET http://localhost:4004/odata/v4/catalog/Books HTTP/1.1
+
 ### Create a book
 POST http://localhost:4004/odata/v4/catalog/Books HTTP/1.1
 content-type: application/json
+
 {
   "id": 1,
   "title": "Wuthering Heights",
@@ -10,11 +12,14 @@ content-type: application/json
   "author": "Jane Austen",
   "genre": "Drama"
 }
+
 ### Get the book
 GET http://localhost:4004/odata/v4/catalog/Books HTTP/1.1
+
 ### Update the book
-PATCH http://localhost:4004/odata/v4/catalog/Books HTTP/1.1
+PATCH http://localhost:4004/odata/v4/catalog/Books(1) HTTP/1.1
 content-type: application/json
+
 {
   "author": "Emily Brontë"
 }
