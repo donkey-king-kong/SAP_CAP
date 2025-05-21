@@ -24,6 +24,22 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>sap</id>
+			<name>SAP Maven Repository</name>
+			<url>https://repo.sap.com/nexus/content/groups/public</url>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>sap</id>
+			<name>SAP Maven Repository</name>
+			<url>https://repo.sap.com/nexus/content/groups/public</url>
+		</pluginRepository>
+	</pluginRepositories>
+
 	<modules>
 		<module>srv</module>
 	</modules>

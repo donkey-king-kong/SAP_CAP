@@ -43,6 +43,12 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
+		<!-- Add Spring Security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -55,6 +61,7 @@
 				<version>${spring.boot.version}</version>
 				<configuration>
 					<skip>false</skip>
+					<workingDirectory>..</workingDirectory>
 				</configuration>
 				<executions>
 					<execution>
