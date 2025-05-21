@@ -1,8 +1,8 @@
 ### Get all books
-GET http://localhost:4004/odata/v4/catalog/Books HTTP/1.1
+GET http://localhost:4004/api/browse/Books
 
 ### Create a book
-POST http://localhost:4004/odata/v4/catalog/Books HTTP/1.1
+POST http://localhost:4004/api/browse/Books HTTP/1.1
 content-type: application/json
 
 {
@@ -14,15 +14,16 @@ content-type: application/json
 }
 
 ### Get the book
-GET http://localhost:4004/odata/v4/catalog/Books HTTP/1.1
+GET http://localhost:4004/api/browse/Books HTTP/1.1
 
 ### Update the book
-PATCH http://localhost:4004/odata/v4/catalog/Books(1) HTTP/1.1
+PATCH http://localhost:4004/api/browse/Books(1) HTTP/1.1
 content-type: application/json
 
 {
   "author": "Emily Brontë"
 }
+
 ### Delete the book
-DELETE http://localhost:4004/odata/v4/catalog/Books(id=1) HTTP/1.1
+DELETE http://localhost:4004/api/browse/Books(id=1) HTTP/1.1
 content-type: application/json
